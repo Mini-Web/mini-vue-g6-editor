@@ -158,6 +158,7 @@ export default {
         this.selectedItem = this.selectedItem.concat(
           ...this.graph.findAllByState("edge", "selected")
         );
+        console.log("487632", this.selectedItem);
       });
       eventBus.$on("deleteItem", () => {
         this.handleDelete();
@@ -165,6 +166,7 @@ export default {
       eventBus.$on("muliteSelectEnd", () => {
         this.multiSelect = false;
         this.selectedItem = this.graph.findAllByState("node", "selected");
+        console.log("432", this.selectedItem);
       });
     },
     handleUndo() {

@@ -10,12 +10,17 @@
   },
   "dependencies": {
     "@antv/g6": "^4.1.4",
+    "canvg": "^3.0.7",
     "core-js": "^3.6.5",
     "element-ui": "2.11.1",
+    "image-to-base64": "^2.1.1",
     "lodash": "^4.17.20",
+    "proxy-polyfill": "^0.3.2",
+    "regenerator-runtime": "^0.13.7",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

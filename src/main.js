@@ -1,3 +1,6 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+import 'whatwg-fetch';
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
@@ -12,5 +15,5 @@ Vue.use(ElementUI, { size: 'mini' });
 new Vue({
   router,
   store,
-  render: (h) => h(App),
+  render: h => h(App),
 }).$mount('#app');

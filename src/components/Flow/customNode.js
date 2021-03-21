@@ -1,5 +1,7 @@
 import { registerNode } from '@antv/g6';
 import { uniqueId } from '@/utils';
+import { imageToBase64 } from '../../imageToBase64';
+
 const customNode = {
   init() {
     registerNode('customNode', {
@@ -39,48 +41,6 @@ const customNode = {
             radius: [4, 0, 0, 4],
           },
         });
-        group.addShape('image', {
-          attrs: {
-            x: offsetX + 16,
-            y: offsetY + 8,
-            width: 20,
-            height: 16,
-            img: _cfg.image,
-            parent: mainId,
-          },
-        });
-        group.addShape('image', {
-          attrs: {
-            x: offsetX + width - 32,
-            y: offsetY + 8,
-            width: 16,
-            height: 16,
-            parent: mainId,
-            img: _cfg.stateImage,
-          },
-        });
-        if (_cfg.backImage) {
-          const bgShape = group.addShape('image', {
-            attrs: {
-              x: offsetX,
-              y: offsetY,
-              width: width,
-              height: height,
-              img: _cfg.backImage,
-            },
-          });
-          bgShape.setClip({
-            type: 'rect',
-            attrs: {
-              x: offsetX,
-              y: offsetY,
-              width: width,
-              height: height,
-              fill: '#fff',
-              radius: 4,
-            },
-          });
-        }
         if (_cfg.label) {
           group.addShape('text', {
             attrs: {
@@ -174,6 +134,61 @@ const customNode = {
         //group.sort()
         // 添加文本、更多图形
         return shape;
+      },
+      async afterDraw(_cfg, group) {
+        let size = _cfg.size;
+        if (!size) {
+          size = [170, 34];
+        }
+        // 此处必须是NUMBER 不然bbox不正常
+        const width = parseInt(size[0]);
+        const height = parseInt(size[1]);
+        // 此处必须有偏移 不然drag-node错位
+        const offsetX = -width / 2;
+        const offsetY = -height / 2;
+        const mainId = 'rect' + uniqueId();
+        group.addShape('image', {
+          attrs: {
+            x: offsetX + 16,
+            y: offsetY + 8,
+            width: 20,
+            height: 16,
+            img: await imageToBase64(_cfg.image),
+            parent: mainId,
+          },
+        });
+        group.addShape('image', {
+          attrs: {
+            x: offsetX + width - 32,
+            y: offsetY + 8,
+            width: 16,
+            height: 16,
+            parent: mainId,
+            img: await imageToBase64(_cfg.stateImage),
+          },
+        });
+        if (_cfg.backImage) {
+          const bgShape = group.addShape('image', {
+            attrs: {
+              x: offsetX,
+              y: offsetY,
+              width: width,
+              height: height,
+              img: await imageToBase64(_cfg.backImage),
+            },
+          });
+          bgShape.setClip({
+            type: 'rect',
+            attrs: {
+              x: offsetX,
+              y: offsetY,
+              width: width,
+              height: height,
+              fill: '#fff',
+              radius: 4,
+            },
+          });
+        }
       },
       //设置状态
       setState(name, value, item) {

@@ -39,13 +39,14 @@ export default {
   },
   methods: {
     init() {
-      const height = this.height - 42;
-      const width = this.width - 400;
+      const height = this.height;
+      const width = this.width;
 
-      this.graph = new G6.Graph({
+      window._graph = this.graph = new G6.Graph({
         container: "graph-container",
         height: height,
         width: width,
+        fitView: true,
         modes: {
           // 支持的 behavior
           default: [
@@ -83,7 +84,7 @@ export default {
 
 <style scoped>
 .page {
-  margin-left: 200px;
-  margin-right: 200px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 </style>
